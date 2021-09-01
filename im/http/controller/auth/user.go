@@ -2,8 +2,11 @@ package auth
 
 import (
 	userModel "fork_go_im/im/http/models/user"
+	"fork_go_im/pkg/helper"
 	"fork_go_im/pkg/model"
 	"fork_go_im/pkg/response"
+	messageModel "go_im/im/http/models/msg"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,4 +44,7 @@ func (*UsersController) GetUsersList(c *gin.Context) {
 
 func (*UsersController) ReadMessage(c *gin.Context) {
 	user := userModel.AuthUser
+	cA, cB := helper.ProduceChannelName(strconv.Itoa(int(user.ID)), c.Query("to_id"))
+	messageModel.ReadMessage(cA, cB)
+	response.SuccessResponse(gin.H{}, 200).ToJson(c)
 }
