@@ -27,17 +27,17 @@ type (
 
 func (*GroupController) List(c *gin.Context) {
 	user := userModel.AuthUser
-	var groupIds []Groups
+	var groupId []Groups
 	err := model.DB.Table("im_group_users").
 		Where("user_id=?", user.ID).
 		Group("group_id").
-		Find(&groupIds).Error
+		Find(&groupId).Error
 	if err != nil {
 		fmt.Println(err)
 	}
 	v := reflect.ValueOf(groupId)
 	groupSlice := make([]string, v.Len())
-	for key, value := range groupIds {
+	for key, value := range groupId {
 		groupSlice[key] = value.GroupId
 	}
 	list, err := group.GetGroupUserList(groupSlice)

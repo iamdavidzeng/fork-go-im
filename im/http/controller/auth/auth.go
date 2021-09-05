@@ -52,6 +52,10 @@ func (a *AuthController) Login(c *gin.Context) {
 	generateToken(c, &users)
 }
 
+// TODO: Implements it.
+func (*WeiBoController) WeiBoCallback(c *gin.Context) {
+}
+
 func generateToken(c *gin.Context, user *userModel.Users) {
 	signKey := config.GetString("app.jwt.sign_key")
 	expirationTime := config.GetInt64("app.jwt.expiration_time")

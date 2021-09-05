@@ -8,7 +8,7 @@ func init() {
 			"host":     config.Env("DB_HOST", "127.0.0.1"),
 			"port":     config.Env("DB_PORT", "3306"),
 			"database": config.Env("DB_DATABASE", "test"),
-			"username": config.Env("DB_USERNAME", ""),
+			"username": config.Env("DB_USERNAME", "root"),
 			"password": config.Env("DB_PASSWORD", ""),
 			"charset":  "utf8mb4",
 			"loc":      config.Env("DB_LOC", "Asia/Shanghai"),

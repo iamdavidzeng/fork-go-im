@@ -40,7 +40,7 @@ func CreatedAll(userIds map[string]string, groupId uint64, uId uint64) (err erro
 		groupUsers[i] = &ImGroupUsers{
 			UserId:    value.ID,
 			GroupId:   groupId,
-			CreatedAt: time.Unix(time.Now().Unix(), 0).Format("2000-01-01 00:00:00"),
+			CreatedAt: time.Unix(time.Now().Unix(), 0).Format("2006-01-02 15:04:05"),
 			Remark:    value.Email,
 			Avatar:    value.Avatar,
 		}

@@ -34,7 +34,7 @@ func Created(userId uint64, groupName string) (id uint64, err error) {
 		UserId:      userId,
 		GroupName:   groupName,
 		Info:        "Wait for editing",
-		CreatedAt:   time.Unix(time.Now().Unix(), 0).Format("2000-01-01 00:00:00"),
+		CreatedAt:   time.Unix(time.Now().Unix(), 0).Format("2006-01-02 15:04:05"),
 		GroupAvatar: "https://api.plture.top/400x400.png",
 	}
 	result := model.DB.Create(&group)

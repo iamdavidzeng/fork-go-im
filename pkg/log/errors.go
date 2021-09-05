@@ -20,7 +20,7 @@ type ErrorInfo struct {
 }
 
 func Warning(str string) {
-	timeString := time.Unix(time.Now().Unix(), 0).Format("2000-01-01 00:00:00")
+	timeString := time.Unix(time.Now().Unix(), 0).Format("2006-01-02 15:04:05")
 	filename, line, functionName := "?", 0, "?"
 	pc, filename, line, ok := runtime.Caller(2)
 	if ok {

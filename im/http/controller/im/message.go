@@ -31,7 +31,7 @@ type ImMessage struct {
 
 func (*MessageController) InfomationHistory(c *gin.Context) {
 	toId := c.Query("to_id")
-	channdelType := c.DefaultQuery("channdel_type", "1")
+	channdelType := c.DefaultQuery("channel_type", "1")
 	user := userModel.AuthUser
 	fromId := cast.ToString(user.ID)
 	if len(toId) < 0 {
@@ -42,7 +42,7 @@ func (*MessageController) InfomationHistory(c *gin.Context) {
 	channelA, channelB := helper.ProduceChannelName(fromId, toId)
 	fmt.Println(channelA, channelB)
 	list := model.DB.Model(ImMessage{}).
-		Where("(channel = ? or channel = ?) amd channel_type = ? order by created_at desc", channelA, channelB, channdelType).
+		Where("(channel = ? or channel = ?) and channel_type = ? order by created_at desc", channelA, channelB, channdelType).
 		Limit(40).
 		Select("id, msg, created_at, from_id, to_id, channel, msg_type").
 		Find(&MsgList)

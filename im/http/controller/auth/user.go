@@ -1,11 +1,11 @@
 package auth
 
 import (
+	messageModel "fork_go_im/im/http/models/msg"
 	userModel "fork_go_im/im/http/models/user"
 	"fork_go_im/pkg/helper"
 	"fork_go_im/pkg/model"
 	"fork_go_im/pkg/response"
-	messageModel "go_im/im/http/models/msg"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -36,7 +36,7 @@ func (*UsersController) GetUsersList(c *gin.Context) {
 	if len(name) > 0 {
 		query = query.Where("name like ?", "%"+name+"%")
 	}
-	query = query.Select("id", "name", "avatart", "status", "created_at").Find(&users)
+	query.Select("id", "name", "avatart", "status", "created_at").Find(&users)
 	response.SuccessResponse(map[string]interface{}{
 		"list": users,
 	}, 200).ToJson(c)
@@ -45,6 +45,6 @@ func (*UsersController) GetUsersList(c *gin.Context) {
 func (*UsersController) ReadMessage(c *gin.Context) {
 	user := userModel.AuthUser
 	cA, cB := helper.ProduceChannelName(strconv.Itoa(int(user.ID)), c.Query("to_id"))
-	messageModel.ReadMessage(cA, cB)
+	messageModel.ReadMsg(cA, cB)
 	response.SuccessResponse(gin.H{}, 200).ToJson(c)
 }

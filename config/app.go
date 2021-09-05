@@ -14,7 +14,7 @@ func init() {
 		//jwt 授权登录
 		"jwt": map[string]interface{}{
 			"sign_key":        config.Env("JWT_SIGN_KEY"),
-			"expiration_time": config.Env("JWT_EXPIRATION_TIME"),
+			"expiration_time": config.Env("JWT_EXPIRATION_TIME", 3600),
 		},
 		"base64": config.Env("BASE64_ENCRYPT"),
 		//https://doc.sm.ms/#api-User-Get_Token 参考文档
