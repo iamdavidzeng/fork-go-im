@@ -36,7 +36,7 @@ func (*UsersController) GetUsersList(c *gin.Context) {
 	if len(name) > 0 {
 		query = query.Where("name like ?", "%"+name+"%")
 	}
-	query.Select("id", "name", "avatart", "status", "created_at").Find(&users)
+	query.Select("id", "name", "avatar", "status", "created_at").Find(&users)
 	response.SuccessResponse(map[string]interface{}{
 		"list": users,
 	}, 200).ToJson(c)
