@@ -23,7 +23,8 @@ type ImMessage struct {
 	FromId      uint64          `json:"user_id"`
 	ToId        uint64          `json:"send_id"`
 	Channel     string          `json:"channel"`
-	Status      int             `json:"is_read"`
+	Status      int             `json:"status"`
+	IsRead      int             `json:"is_read"`
 	MsgType     int             `json:"msg_type"`
 	ChannelType int             `json:"channel_type"`
 	Users       userModel.Users `json:"users" gorm:"foreignKey:FromId;references:ID"`
@@ -50,10 +51,10 @@ func (*MessageController) InfomationHistory(c *gin.Context) {
 		return
 	}
 
-	fromIds, _ := cast.ToUint64E(user.ID)
+	fromIdUint64, _ := cast.ToUint64E(user.ID)
 	for key, value := range MsgList {
 		MsgList[key].CreatedAt = carbon.Parse(value.CreatedAt).SetLocale("zh-CN").DiffForHumans()
-		if value.FromId == fromIds {
+		if value.FromId == fromIdUint64 {
 			MsgList[key].Status = 0
 		} else {
 			MsgList[key].Status = 1
