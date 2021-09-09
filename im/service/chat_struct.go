@@ -27,9 +27,9 @@ var ImManager = ImClientManager{
 }
 
 type ImOnlineMsg struct {
+	ID          string `json:"id,omitempty"`
 	Code        int    `json:"code,omitempty"`
 	Msg         string `json:"msg,omitempty"`
-	ID          string `json:"id,omitempty"`
 	ChannelType int    `json:"channel_type"`
 }
 
@@ -62,9 +62,9 @@ type ImMessage struct {
 }
 
 type OnlineMsg struct {
+	ID          string `json:"id,omitempty"`
 	Code        int    `json:"code,omitempty"`
 	Msg         string `json:"msg,omitempty"`
-	ID          string `json:"id,omitempty"`
 	ChannelType int    `json:"channel_type"`
 }
 

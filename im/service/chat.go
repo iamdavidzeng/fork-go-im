@@ -15,20 +15,16 @@ import (
 
 var mutexKey sync.Mutex
 
-func (manager *ImClientManager) ImSend(message []byte, ignore *ImClient) {
-	data, ok := manager.ImClientMap[ignore.ID]
-	fmt.Println(ignore.ID)
-	if ok {
-		data.Send <- message
-	}
-}
-
 func (manager *ImClientManager) ImStart() {
 	for {
 		select {
 		case conn := <-ImManager.Register:
 			mutexKey.Lock()
-			manager.ImClientMap[conn.ID] = &ImClient{ID: conn.ID, Socket: conn.Socket, Send: conn.Send}
+			manager.ImClientMap[conn.ID] = &ImClient{
+				ID:     conn.ID,
+				Socket: conn.Socket,
+				Send:   conn.Send,
+			}
 			mutexKey.Unlock()
 			jsonMessage, _ := json.Marshal(&ImOnlineMsg{
 				Code:        connOk,
@@ -121,6 +117,14 @@ func (manager *ImClientManager) ImStart() {
 	}
 }
 
+func (manager *ImClientManager) ImSend(message []byte, ignore *ImClient) {
+	data, ok := manager.ImClientMap[ignore.ID]
+	fmt.Println(ignore.ID)
+	if ok {
+		data.Send <- message
+	}
+}
+
 func (c *ImClient) ImWrite() {
 	defer func() {
 		c.Socket.Close()
@@ -157,7 +161,10 @@ func (c *ImClient) ImRead() {
 			fmt.Println(err)
 		}
 		if wordsfilter.MsgFilter(msg.Msg) {
-			c.Socket.WriteMessage(websocket.TextMessage, []byte(`{"code": 401, "data": "Sensitive words are not allowed."}`))
+			c.Socket.WriteMessage(
+				websocket.TextMessage,
+				[]byte(`{"code": 401, "data": "Sensitive words are not allowed."}`),
+			)
 			continue
 		} else {
 			if msg.ChannelType == 1 {
@@ -169,7 +176,10 @@ func (c *ImClient) ImRead() {
 			}
 		}
 		if string(message) == "HeartBeat" {
-			c.Socket.WriteMessage(websocket.TextMessage, []byte(`{"code": 0, "data": "heatbeat ok"}`))
+			c.Socket.WriteMessage(
+				websocket.TextMessage,
+				[]byte(`{"code": 0, "data": "heatbeat ok"}`),
+			)
 			continue
 		}
 		jsonMessage, _ := json.Marshal(&Message{Sender: c.ID, Content: string(message)})
