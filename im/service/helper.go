@@ -3,7 +3,7 @@ package service
 import (
 	"encoding/json"
 	"fmt"
-	messgeModel "fork_go_im/im/http/models/msg"
+	messageModel "fork_go_im/im/http/models/msg"
 	"fork_go_im/pkg/helper"
 	"fork_go_im/pkg/model"
 	"strconv"
@@ -23,7 +23,7 @@ func PutGroupData(msg *Msg, isRead int, channelType int) {
 
 	fid := uint64(msg.FromId)
 	tid := uint64(msg.ToId)
-	user := messgeModel.ImMessage{
+	user := messageModel.ImMessage{
 		FromId:      fid,
 		ToId:        tid,
 		Msg:         msg.Msg,
@@ -43,7 +43,7 @@ func PutData(msg *Msg, isRead int, channelType int) {
 	)
 	fid := uint64(msg.FromId)
 	tid := uint64(msg.ToId)
-	user := messgeModel.ImMessage{
+	user := messageModel.ImMessage{
 		FromId:      fid,
 		ToId:        tid,
 		Msg:         msg.Msg,

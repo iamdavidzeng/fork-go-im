@@ -43,7 +43,7 @@ func (manager *ImClientManager) ImStart() {
 					if list.Error != nil {
 						fmt.Println(list.Error)
 					}
-					for key, _ := range msgList {
+					for key := range msgList {
 						data, _ := json.Marshal(&Msg{
 							Code:        SendOk,
 							Msg:         msgList[key].Msg,
@@ -185,5 +185,4 @@ func (c *ImClient) ImRead() {
 		jsonMessage, _ := json.Marshal(&Message{Sender: c.ID, Content: string(message)})
 		ImManager.Broadcast <- jsonMessage
 	}
-
 }
